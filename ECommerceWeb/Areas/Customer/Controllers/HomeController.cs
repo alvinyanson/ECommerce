@@ -2,7 +2,7 @@ using ECommerceWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace ECommerceWeb.Controllers
+namespace ECommerceWeb.Areas.Customer.Controllers
 {
     public class HomeController : Controller
     {
@@ -27,12 +27,6 @@ namespace ECommerceWeb.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public IActionResult ShowToast()
-        {
-            TempData["success"] = "Product created successfully.";
-            return Index();
         }
     }
 }
