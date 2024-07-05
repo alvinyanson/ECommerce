@@ -19,5 +19,23 @@ namespace ECommerceWeb.Areas.Admin.Controllers
             IEnumerable<Category> categories = _unitOfWork.Category.GetAll();
             return View(categories);
         }
+
+        public IActionResult Upsert(int? id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Upsert(Category category) {
+            if(ModelState.IsValid)
+            {
+                _unitOfWork.Category.Add(category);
+                _unitOfWork.Save();
+                TempData["success"] = "Category added successfully";
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
     }
 }
