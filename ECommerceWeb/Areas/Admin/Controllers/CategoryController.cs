@@ -54,5 +54,25 @@ namespace ECommerceWeb.Areas.Admin.Controllers
 
             return View();
         }
+
+
+        [HttpDelete]
+        public IActionResult Delete(int? id) 
+        { 
+            var categoryToDelete = _unitOfWork.Category.Get(u => u.Id == id);
+
+            if(categoryToDelete == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            _unitOfWork.Category.Remove(categoryToDelete);
+            _unitOfWork.Save();
+
+            String successMessage = "Category deleted successfully";
+            TempData["success"] = successMessage;
+
+            return Json(new { success = true, message = successMessage });
+        }
     }
 }
