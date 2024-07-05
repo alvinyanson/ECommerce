@@ -1,8 +1,15 @@
 ﻿@model IEnumerable<Product>
 
-<div class="text-center">
+<div class="text-center mb-5">
     <h1 class="display-4">Welcome</h1>
     <p>Your One-Stop Shop for Everything!</p>
+
+    <form action="@Url.Action("Search", "Home")" method="get" class="mb-3">
+        <div class="mb-3">
+            <input type="text" name="query" class="form-control" placeholder="Search here..." />
+        </div>
+    </form>
+
 </div>
 
 

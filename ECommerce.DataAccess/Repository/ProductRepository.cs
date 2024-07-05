@@ -15,7 +15,12 @@ namespace ECommerce.DataAccess.Repository
 
         public void Update(Product product)
         {
-            _db.Update(product);
+            _db.Products.Update(product);
+        }
+
+        public IEnumerable<Product> Search(String query)
+        {
+            return _db.Products.Where(p => p.Name.ToLower().Contains(query.ToLower()));
         }
     }
 }

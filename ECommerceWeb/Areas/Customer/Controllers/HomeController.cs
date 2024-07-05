@@ -16,10 +16,18 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? query)
         {
-            IEnumerable<Product> products = _unitOfWork.Product.GetAll("Category");
-            return View(products);
+            if(query != null)
+            {
+                IEnumerable<Product> products = _unitOfWork.Product.Search(query);
+                return View(products);
+            }
+            else
+            {
+                IEnumerable<Product> products = _unitOfWork.Product.GetAll("Category");
+                return View(products);
+            }
         }
 
         public IActionResult Details(int? id)
@@ -37,6 +45,12 @@ namespace ECommerceWeb.Areas.Customer.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public IActionResult Search(String? query)
+        {
+            return RedirectToAction("Index", new {query = "Air"});
         }
     }
 }
