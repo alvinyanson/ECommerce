@@ -19,7 +19,7 @@ namespace ECommerce.Models
         public string BriefDescription { get; set; }
 
         [ValidateNever]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
         [Required]
         public double Price { get; set; }
