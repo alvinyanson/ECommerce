@@ -22,16 +22,33 @@ namespace ECommerceWeb.Areas.Admin.Controllers
 
         public IActionResult Upsert(int? id)
         {
-            return View();
+            if(id == null || id == 0)
+            {
+                return View(new Category());
+            }
+            else
+            {
+                Category category = _unitOfWork.Category.Get(u => u.Id == id);
+                return View(category);
+            }
         }
 
         [HttpPost]
         public IActionResult Upsert(Category category) {
             if(ModelState.IsValid)
             {
-                _unitOfWork.Category.Add(category);
+                if(category.Id == 0)
+                {
+                    _unitOfWork.Category.Add(category);
+                    TempData["success"] = "Category added successfully";
+                } 
+                else
+                {
+                    _unitOfWork.Category.Update(category);
+                    TempData["success"] = "Category updated successfully";
+                }
+
                 _unitOfWork.Save();
-                TempData["success"] = "Category added successfully";
                 return RedirectToAction("Index");
             }
 
