@@ -19,9 +19,13 @@
                 <div class="card-body">
                     <h5 class="card-title">@product.Name</h5>
                     <p class="card-text">@product.BriefDescription</p>
-                    <a asp-area="Admin" asp-controller="Product" asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-primary">
-                        Edit
-                    </a>
+                    
+                    <div class="d-flex align-items-center justify-content-between">
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-primary">
+                            Edit
+                        </a>
+                        <h5 class="mb-0 text-primary fw-bold">@product.Price.ToString("c")</h5>
+                    </div>
                 </div>
             </div>
         </div>
