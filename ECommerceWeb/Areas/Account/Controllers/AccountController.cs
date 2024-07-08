@@ -31,13 +31,12 @@ namespace ECommerceWeb.Areas.Account.Controllers
         public async Task<IActionResult> LogIn()
         {
 
-            //if (await _accountService.IsSignedIn(User))
-            //{
-            //    return RedirectToAction("index", "home");
-            //}
+            if (await _accountService.IsSignedIn(User))
+            {
+                return LocalRedirect(Url.Content("~/"));
+            }
 
             return View();
-
         }
 
 
@@ -71,6 +70,22 @@ namespace ECommerceWeb.Areas.Account.Controllers
             }
 
             return result.Succeeded ? LocalRedirect(Url.Content("~/")) : View();
+        }
+
+        //[HttpGet]
+        //public async Task<IActionResult> Logout()
+        //{
+        //    await _accountService.SignOutAsync();
+
+        //    return RedirectToAction("login");
+        //}
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _accountService.SignOutAsync();
+
+            return RedirectToAction("LogIn");
         }
 
     }
