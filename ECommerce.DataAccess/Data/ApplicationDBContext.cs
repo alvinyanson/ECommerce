@@ -13,6 +13,8 @@ namespace ECommerce.DataAccess.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Cart> Carts { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,6 +57,18 @@ namespace ECommerce.DataAccess.Data
                     CategoryId = 2,
                 }
                 );
+
+            modelBuilder.Entity<Cart>().HasData(
+                    new Cart
+                    {
+                        Id = 1,
+                        TotalPrice = 500,
+                    }
+                );
+
+            modelBuilder.Entity<CartItem>().HasData(
+            new CartItem { Id = 1, ProductId = 25, Quantity = 2, CartId = 1 }
+        );
         }
     }
 }
