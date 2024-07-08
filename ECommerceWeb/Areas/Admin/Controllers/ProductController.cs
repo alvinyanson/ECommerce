@@ -55,7 +55,6 @@ namespace ECommerceWeb.Areas.Admin.Controllers
             {
 
 
-
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
 
                 if (file != null)
