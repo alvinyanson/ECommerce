@@ -20,10 +20,11 @@
                     <h5 class="card-title">@product.Name</h5>
                     <p class="card-text">@product.BriefDescription</p>
                     
-                    <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
                         <a asp-area="Admin" asp-controller="Product" asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-primary">
                             Edit
                         </a>
+                        <a onClick="Delete('/admin/product/delete/@product.Id')" class="btn btn-danger ms-2 me-auto">Delete</a>
                         <h5 class="mb-0 text-primary fw-bold">@product.Price.ToString("c")</h5>
                     </div>
                 </div>
@@ -32,3 +33,8 @@
     }
 
 </div>
+
+
+@section Scripts {
+    <script src="~/js/product.js"></script>
+}

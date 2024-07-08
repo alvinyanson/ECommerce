@@ -100,5 +100,24 @@ namespace ECommerceWeb.Areas.Admin.Controllers
                 return View();
             }
         }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var productToDelete = _unitOfWork.Product.Get(u => u.Id == id);
+
+            if (productToDelete == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            _unitOfWork.Product.Remove(productToDelete);
+            _unitOfWork.Save();
+
+            String successMessage = "Product deleted successfully";
+            TempData["success"] = successMessage;
+
+            return Json(new { success = true, message = successMessage });
+        }
     }
 }
