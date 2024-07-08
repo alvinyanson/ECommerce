@@ -20,7 +20,7 @@ namespace ECommerceWeb.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Product> products = _unitOfWork.Product.GetAll("Category");
+            IEnumerable<Product> products = _unitOfWork.Product.GetAll("Categories");
 
             return View(products);
         }
@@ -53,6 +53,9 @@ namespace ECommerceWeb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+
+
+
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
 
                 if (file != null)
@@ -83,6 +86,7 @@ namespace ECommerceWeb.Areas.Admin.Controllers
 
                 if (product.Id == 0)
                 {
+                    product.Categories = _unitOfWork.Category.GetAll().Where(u => u.Id == product.CategoryId).ToList();
                     _unitOfWork.Product.Add(product);
                     TempData["success"] = "Product created successfully.";
                 }

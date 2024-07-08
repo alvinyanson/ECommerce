@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ECommerce.Models
@@ -12,5 +13,8 @@ namespace ECommerce.Models
         [MaxLength(30)]
         [DisplayName("Category Name")]
         public string Name { get; set; }
+
+        [ValidateNever]
+        public ICollection<Product> Products { get; set; }
     }
 }

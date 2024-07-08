@@ -25,14 +25,18 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             }
             else
             {
-                IEnumerable<Product> products = _unitOfWork.Product.GetAll("Category");
+                //IEnumerable<Product> products = _unitOfWork.Product.GetAll("Category");
+                IEnumerable<Product> products = _unitOfWork.Product.GetAll();
+
                 return View(products);
             }
         }
 
         public IActionResult Details(int? id)
         {
-            Product product = _unitOfWork.Product.Get(u => u.Id == id, "Category");
+            //Product product = _unitOfWork.Product.Get(u => u.Id == id, "Category");
+            Product product = _unitOfWork.Product.Get(u => u.Id == id);
+
             return View(product);
         }
 

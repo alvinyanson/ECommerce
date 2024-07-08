@@ -1,6 +1,7 @@
 ﻿using ECommerce.DataAccess.Data;
 using ECommerce.DataAccess.Repository.IRepository;
 using ECommerce.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.DataAccess.Repository
 {

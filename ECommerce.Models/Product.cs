@@ -24,10 +24,11 @@ namespace ECommerce.Models
         [Required]
         public double Price { get; set; }
 
-        public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
+        public int CategoryId { get; set; }
+
         [ValidateNever]
-        public Category Category { get; set; }
+        public ICollection<Category> Categories { get; set; }
 
     }
 }
