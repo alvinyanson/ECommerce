@@ -1,8 +1,10 @@
-﻿using ECommerce.Models;
+﻿using AutoMapper;
+using ECommerce.Models;
 using ECommerce.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using NuGet.Protocol.Plugins;
 
 namespace ECommerceWeb.Areas.Account.Controllers
 {
@@ -10,10 +12,13 @@ namespace ECommerceWeb.Areas.Account.Controllers
     {
 
         private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService,
+            IMapper mapper)
         {
             _accountService = accountService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -46,13 +51,18 @@ namespace ECommerceWeb.Areas.Account.Controllers
                 return BadRequest();
             }
 
+            LogIn login = _mapper.Map<LogIn>(credentials);
 
-            return Json (new {success = "register successful"});
+            var result = await _accountService.SignInAsync(login);
+
+            return result.Succeeded ? LocalRedirect(Url.Content("~/")) : throw new InvalidOperationException();
         }
 
         [HttpPost]
         public async Task<IActionResult> LogIn(LogIn credentials)
         {
+
+
             var result = await _accountService.SignInAsync(credentials);
 
             if (!result.Succeeded)
@@ -60,7 +70,7 @@ namespace ECommerceWeb.Areas.Account.Controllers
                 ModelState.AddModelError(string.Empty, "Invalid username or password.");
             }
 
-            return result.Succeeded ? RedirectToAction("index", "home") : View();
+            return result.Succeeded ? LocalRedirect(Url.Content("~/")) : View();
         }
 
     }
