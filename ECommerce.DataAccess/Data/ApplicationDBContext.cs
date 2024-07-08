@@ -17,9 +17,9 @@ namespace ECommerce.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Electronics", DisplayOrder = 1 },
-                new Category { Id = 2, Name = "Home and Kitchen", DisplayOrder = 2 },
-                new Category { Id = 3, Name = "Fashion", DisplayOrder = 3 }
+                new Category { Id = 1, Name = "Electronics" },
+                new Category { Id = 2, Name = "Home and Kitchen" },
+                new Category { Id = 3, Name = "Fashion" }
                 );
 
 
