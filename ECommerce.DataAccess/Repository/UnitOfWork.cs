@@ -1,10 +1,6 @@
 ﻿using ECommerce.DataAccess.Data;
 using ECommerce.DataAccess.Repository.IRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ECommerce.DataAccess.Repository
 {
@@ -15,11 +11,14 @@ namespace ECommerce.DataAccess.Repository
 
         public ICategoryRepository Category { get; private set; }
 
+        public ICartRepository Cart { get; private set; }
+
         public UnitOfWork(ApplicationDBContext db)
         {
             _db = db;
             Product = new ProductRepository(_db);
             Category = new CategoryRepository(_db);
+            Cart = new CartRepository(_db);
         }
 
         public void Save()
