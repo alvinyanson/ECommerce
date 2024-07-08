@@ -1,4 +1,5 @@
 ﻿using ECommerce.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,9 +14,7 @@ namespace ECommerce.DataAccess.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
-
         public DbSet<Cart> Carts { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
