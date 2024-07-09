@@ -42,12 +42,6 @@ namespace ECommerce.DataAccess.Data
                 .HasIndex(pc => new { pc.ProductId, pc.CategoryId })
                 .IsUnique();
 
-
-            modelBuilder.Entity<Cart>()
-                .HasIndex(cart => new { cart.ProductId, cart.OwnerId })
-                .IsUnique();
-
-
             modelBuilder.Entity<Category>().HasData(seedCategories);
 
         }

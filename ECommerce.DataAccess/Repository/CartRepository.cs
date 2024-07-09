@@ -14,5 +14,10 @@ namespace ECommerce.DataAccess.Repository
         {
             _db = db;
         }
+
+        public void Update(Cart cart)
+        {
+            _db.Carts.Update(cart);
+        }
     }
 }
