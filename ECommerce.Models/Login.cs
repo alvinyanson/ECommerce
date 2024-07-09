@@ -5,10 +5,10 @@ namespace ECommerce.Models
     public class LogIn
     {
         [Required]
-        public string Email { get; set; } = default!;
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        public string Password { get; set; } = default!;
+        public string Password { get; set; }
     }
 }

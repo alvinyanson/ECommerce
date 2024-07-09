@@ -39,6 +39,19 @@ namespace ECommerceWeb.Areas.Account.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> LogIn(LogIn credentials)
+        {
+            var result = await _accountService.SignInAsync(credentials);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid username or password.");
+            }
+
+            return result.Succeeded ? LocalRedirect(Url.Content("~/")) : View();
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUp credentials)
@@ -56,29 +69,6 @@ namespace ECommerceWeb.Areas.Account.Controllers
 
             return result.Succeeded ? LocalRedirect(Url.Content("~/")) : throw new InvalidOperationException();
         }
-
-        [HttpPost]
-        public async Task<IActionResult> LogIn(LogIn credentials)
-        {
-
-
-            var result = await _accountService.SignInAsync(credentials);
-
-            if (!result.Succeeded)
-            {
-                ModelState.AddModelError(string.Empty, "Invalid username or password.");
-            }
-
-            return result.Succeeded ? LocalRedirect(Url.Content("~/")) : View();
-        }
-
-        //[HttpGet]
-        //public async Task<IActionResult> Logout()
-        //{
-        //    await _accountService.SignOutAsync();
-
-        //    return RedirectToAction("login");
-        //}
 
         [HttpGet]
         public async Task<IActionResult> Logout()

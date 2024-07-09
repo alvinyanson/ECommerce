@@ -3,20 +3,17 @@
 
 <div class="container border p-4 col-lg-5">
     <form method="post" class="m-3">
-        <fieldset>
-            <legend>Log In</legend>
-            <hr />
-
+            <h3>Log In</h3>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <!-- Username field-->
+            <!-- Username -->
             <div class="form-group col mb-3 p-1">
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
-            <!-- Password field-->
+            <!-- Password -->
             <div class="form-group col mb-3 p-1">﻿
                 <label asp-for="Password"></label>
                 <input asp-for="Password" class="form-control" />
@@ -27,8 +24,6 @@
             <div class="row mt-3">
                 <a asp-action="signup" class="btn btn-link">or create an account</a>
             </div>
-
-        </fieldset>
     </form>
 </div>
 
