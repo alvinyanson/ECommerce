@@ -24,11 +24,6 @@ namespace ECommerce.Models
         [Required]
         public double Price { get; set; }
 
-        [ForeignKey("CategoryId")]
-        public int CategoryId { get; set; }
-
-        [ValidateNever]
-        public ICollection<Category> Categories { get; set; }
-
+        public virtual List<ProductCategory>? Category { get; set; }
     }
 }

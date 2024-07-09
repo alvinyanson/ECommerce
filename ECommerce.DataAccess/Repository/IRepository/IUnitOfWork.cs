@@ -8,6 +8,8 @@
 
         ICartRepository Cart { get; }
 
+        IProductCategoryRepository ProductCategory { get; }
+
         void Save();
     }
 }

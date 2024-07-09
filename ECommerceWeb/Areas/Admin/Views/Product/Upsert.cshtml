@@ -43,13 +43,10 @@
                             <span asp-validation-for="Product.Price" class="text-danger"></span>
                         </div>
 
-                        @* Category *@
-                        <div class="form-floating py-2 col-12">
-                            <select asp-for="@Model.Product.CategoryId" asp-items="@Model.CategoryList" class="form-select border-0 shadow">
-                                <option disabled selected>--Select Category--</option>
-                            </select>
-                            <label asp-for="Product.CategoryId" class="ms-2"></label>
-                        </div>
+
+                        <label>Categories</label>
+
+                        <div class="input-group mb-3" style="width: 100%" id="categoryToggler"></div>
 
                         @* Image *@
                         <div class="form-floating py-2 col-12">
@@ -104,4 +101,6 @@
     @{
         <partial name="_ValidationScriptsPartial" />
     }
+
+    <script src="~/js/product-form.js"></script>
 }

@@ -13,8 +13,5 @@ namespace ECommerce.Models
         [MaxLength(30)]
         [DisplayName("Category Name")]
         public string Name { get; set; }
-
-        [ValidateNever]
-        public ICollection<Product> Products { get; set; }
     }
 }

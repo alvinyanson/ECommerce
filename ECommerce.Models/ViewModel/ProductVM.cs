@@ -8,6 +8,6 @@ namespace ECommerce.Models.ViewModel
         public Product Product { get; set; }
 
         [ValidateNever]
-        public IEnumerable<SelectListItem> CategoryList { get; set; }
+        public IEnumerable<Category> CategoryList { get; set; }
     }
 }
