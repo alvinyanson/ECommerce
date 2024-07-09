@@ -13,6 +13,8 @@ namespace ECommerce.DataAccess.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Cart> Carts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,6 +40,11 @@ namespace ECommerce.DataAccess.Data
 
             modelBuilder.Entity<ProductCategory>()
                 .HasIndex(pc => new { pc.ProductId, pc.CategoryId })
+                .IsUnique();
+
+
+            modelBuilder.Entity<Cart>()
+                .HasIndex(cart => new { cart.ProductId, cart.OwnerId })
                 .IsUnique();
 
 
