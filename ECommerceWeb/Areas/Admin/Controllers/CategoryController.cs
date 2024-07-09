@@ -1,9 +1,12 @@
 ﻿using ECommerce.DataAccess.Repository.IRepository;
 using ECommerce.Models;
+using ECommerce.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceWeb.Areas.Admin.Controllers
 {
+    [Authorize(Policy = nameof(Policy.AdminRights))]
     public class CategoryController : Controller
     {
 

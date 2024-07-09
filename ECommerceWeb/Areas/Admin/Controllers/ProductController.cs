@@ -1,14 +1,16 @@
 ﻿using ECommerce.DataAccess.Repository.IRepository;
 using ECommerce.Models;
 using ECommerce.Models.ViewModel;
+using ECommerce.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ECommerceWeb.Areas.Admin.Controllers
 {
+    [Authorize(Policy = nameof(Policy.AdminRights))]
     public class ProductController : Controller
     {
-
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
 

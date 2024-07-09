@@ -4,8 +4,11 @@ using ECommerce.DataAccess.Repository;
 using Microsoft.EntityFrameworkCore;
 using ECommerce.Service.Services.Interfaces;
 using ECommerce.Service.Services;
+using ECommerce.Service;
 using Microsoft.AspNetCore.Identity;
-using System;
+using ECommerce.Service.Attributes;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +29,22 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     .AddDefaultTokenProviders();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddAuthorization(options =>
+{
+    foreach (Policy policyEnum in Enum.GetValues(typeof(Policy)))
+    {
+        string[]? roles = policyEnum.GetAttribute<RolesAttribute>()?.Roles;
+
+        if (roles != null && roles.Any())
+        {
+            options.AddPolicy(policyEnum.ToString(), policy =>
+            {
+                policy.RequireRole(roles);
+            });
+        }
+    }
+});
 
 builder.Services.AddTransient<UserValidator<IdentityUser>>();
 builder.Services.AddTransient<IAccountService, AccountService>();
