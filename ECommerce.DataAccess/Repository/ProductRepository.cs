@@ -21,7 +21,8 @@ namespace ECommerce.DataAccess.Repository
 
         public IEnumerable<Product> Search(String query)
         {
-            return _db.Products.Where(p => p.Name.ToLower().Contains(query.ToLower()));
+            return _db.Products.Where(p => p.Name.ToLower().Contains(query.ToLower()) ||
+                    p.Category.Any(c => c.Category.Name.ToLower().Contains(query.ToLower())));
         }
     }
 }

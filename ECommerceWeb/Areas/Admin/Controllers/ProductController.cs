@@ -60,7 +60,7 @@ namespace ECommerceWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upsert(Product product, IFormFile? file, String customField)
+        public IActionResult Upsert(Product product, IFormFile? file)
         {
             if (ModelState.IsValid)
             {

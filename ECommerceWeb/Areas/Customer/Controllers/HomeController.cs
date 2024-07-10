@@ -13,7 +13,7 @@ namespace ECommerceWeb.Areas.Customer.Controllers
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<IdentityUser> _userManager;
-
+        public String userQuery;
 
         public HomeController(
             IUnitOfWork unitOfWork,
@@ -28,6 +28,7 @@ namespace ECommerceWeb.Areas.Customer.Controllers
         {
             if(query != null)
             {
+                ViewBag.Query = query;
                 IEnumerable<Product> products = _unitOfWork.Product.Search(query);
                 return View(products);
             }
@@ -66,7 +67,7 @@ namespace ECommerceWeb.Areas.Customer.Controllers
         [HttpGet]
         public IActionResult Search(String? query)
         {
-            return RedirectToAction("Index", new {query = "Air"});
+            return RedirectToAction("Index", new { query });
         }
 
 
