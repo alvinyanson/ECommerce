@@ -1,5 +1,6 @@
 ﻿using ECommerce.DataAccess.Repository.IRepository;
 using ECommerce.Models;
+using ECommerce.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +25,18 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             string? userId = _userManager.GetUserId(User);
 
             IEnumerable<Cart> result = _unitOfWork.Cart.GetAll("Product").Where(u => u.OwnerId == userId);
-            return View(result);
+
+            CartVM cartVM = new CartVM()
+            {
+                Cart = result
+            };
+
+            foreach (var cart in cartVM.Cart)
+            {
+                cartVM.OrderTotal += (cart.Product.Price * cart.Quantity);
+            }
+
+            return View(cartVM);
         }
 
     }

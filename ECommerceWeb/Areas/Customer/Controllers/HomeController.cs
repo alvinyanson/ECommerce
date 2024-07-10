@@ -83,7 +83,7 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             {
                 // shopping cart exist
                 cartFromDb.Quantity += cart.Quantity;
-                _unitOfWork.Cart.Update(cart);
+                _unitOfWork.Cart.Update(cartFromDb);
             }
             else
             {
