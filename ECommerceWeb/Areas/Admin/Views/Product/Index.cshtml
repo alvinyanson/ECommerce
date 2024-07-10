@@ -2,7 +2,7 @@
 
 <div class="row mb-3">
     <div class="col-auto text-end">
-        <a asp-area="Admin" asp-controller="Product" asp-action="Upsert" class="btn btn-primary">
+        <a asp-area="Admin" asp-controller="Product" asp-action="Upsert" class="btn btn-secondary">
             Create New Product
         </a>
     </div>
@@ -10,23 +10,19 @@
 
 
 <div class="row">
-    @foreach (var product in Model)
+    @foreach (var product in Model.OrderByDescending(product => product.Id))
     {
-        <div class="col-12 col-lg-3 mb-4">
-            <div class="card">
-                <img src="@Url.Content("~/" + product.ImageUrl)" class="card-img-top" alt="...">
+        <div class="col-6 col-sm-4 col-lg-3 col-xl-2 mb-4">
+            <img src="@Url.Content("~/" + product.ImageUrl)" class="rounded-4" style="object-fit: cover; height: 200px">
 
-                <div class="card-body">
-                    <h5 class="card-title">@product.Name</h5>
-                    <p class="card-text">@product.BriefDescription</p>
-                    
-                    <div class="d-flex align-items-center">
-                        <a asp-area="Admin" asp-controller="Product" asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-primary">
-                            Edit
-                        </a>
-                        <a onClick="Delete('/admin/product/delete/@product.Id')" class="btn btn-danger ms-2 me-auto">Delete</a>
-                        <h5 class="mb-0 text-primary fw-bold">@product.Price.ToString("c")</h5>
-                    </div>
+            <div class="mt-2">
+                <span class="d-block">@product.Name</span>
+                <span class="d-block fw-bold">@product.Price.ToString("c")</span>
+                <div class="d-flex mt-2">
+                    <a asp-area="Admin" asp-controller="Product" asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-secondary btn-sm">
+                        Edit
+                    </a>
+                    <a onClick="Delete('/admin/product/delete/@product.Id')" class="btn btn-danger btn-sm ms-2 me-auto">Delete</a>
                 </div>
             </div>
         </div>

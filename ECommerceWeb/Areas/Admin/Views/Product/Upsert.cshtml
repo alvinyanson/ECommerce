@@ -1,10 +1,12 @@
 ﻿@model ProductVM
 
 <div class="card shadow border-0 my-4">
-    <div class="card-header bg-primary bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white py-2"> @(Model.Product.Id != 0 ? "Update" : "Create") Product</h2>
+    <div class="card-header bg-primary bg-gradient text-light ml-0 py-4">
+        <div class="row px-4">
+            <div class="col-6">
+                <h5 class="pt-2 text-white">
+                    @(Model.Product.Id != 0 ? "Update" : "Create") Product
+                </h5>
             </div>
         </div>
     </div>
@@ -46,7 +48,7 @@
 
                         <label>Categories</label>
 
-                        <div class="input-group mb-3" style="width: 100%" id="categoryToggler"></div>
+                        <div class="input-group mb-3 w-100" id="categoryToggler"></div>
 
                         @* Image *@
                         <div class="form-floating py-2 col-12">
@@ -55,20 +57,9 @@
                         </div>
 
                         @* CTA *@
-                        <div class="row pt-2">
-                            <div class="col-6 col-md-3">
-                                @if (Model.Product.Id != 0)
-                                {
-                                    <button type="submit" class="btn btn-primary form-control">Update</button>
-                                }
-                                else
-                                {
-                                    <button type="submit" class="btn btn-primary form-control">Create</button>
-                                }
-                            </div>
-                            <div class="col-6 col-md-3">
-                                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary border form-control">Back</a>
-                            </div>
+                        <div class="pt-2">
+                            <button type="submit" class="btn btn-primary me-3">Save</button>
+                            <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Back</a>
                         </div>
                     </div>
                 </div>

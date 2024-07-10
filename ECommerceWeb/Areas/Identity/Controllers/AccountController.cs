@@ -28,9 +28,8 @@ namespace ECommerceWeb.Areas.Account.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> LogIn()
+        public async Task<IActionResult> LogIn(string returnUrl = null)
         {
-
             if (await _accountService.IsSignedIn(User))
             {
                 return LocalRedirect(Url.Content("~/"));

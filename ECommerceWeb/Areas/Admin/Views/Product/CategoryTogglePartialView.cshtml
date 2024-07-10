@@ -1,6 +1,6 @@
 ﻿@model CategoryStateManager
 
-<div class="d-flex border flex-wrap">
+<div class="d-flex border flex-wrap w-100">
     @foreach (CategoryReadDto category in Model.GetCategories())
     {
         bool isExist = Model?.HasCategory(category.Id) ?? false;

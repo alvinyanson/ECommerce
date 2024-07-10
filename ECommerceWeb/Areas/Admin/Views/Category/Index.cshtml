@@ -2,7 +2,7 @@
 
 <div class="row mb-3">
     <div class="col-auto text-end">
-        <a asp-area="Admin" asp-controller="Category" asp-action="Upsert" class="btn btn-primary">
+        <a asp-area="Admin" asp-controller="Category" asp-action="Upsert" class="btn btn-secondary">
             Create New Category
         </a>
     </div>
@@ -11,14 +11,14 @@
 <div class="row">
     @foreach (var product in Model)
     {
-        <div class="col-12 col-lg-3 mb-4">
+        <div class="col-6 col-sm-4 col-lg-3 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-4">@product.Name</h5>
-                    <a asp-area="Admin" asp-controller="Category" asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-primary">
+                    <a asp-area="Admin" asp-controller="Category" asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-secondary btn-sm">
                         Edit
                     </a>
-                    <a onClick="Delete('/admin/category/delete/@product.Id')" class="btn btn-danger">Delete</a>
+                    <a onClick="Delete('/admin/category/delete/@product.Id')" class="btn btn-danger btn-sm">Delete</a>
                 </div>
             </div>
         </div>
