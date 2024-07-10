@@ -49,6 +49,23 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Minus(int cartId)
+        {
+            var cartFromDb = _unitOfWork.Cart.Get(u => u.Id == cartId);
+            if(cartFromDb.Quantity <= 1)
+            {
+                _unitOfWork.Cart.Remove(cartFromDb);
+            }
+            else
+            {
+                cartFromDb.Quantity -= 1;
+                _unitOfWork.Cart.Update(cartFromDb);
+            }
+
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult Remove(int cartId) 
         {
             var cartFromDb = _unitOfWork.Cart.Get(u => u.Id == cartId);
