@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ECommerceWeb.Areas.Customer.Controllers
 {
@@ -27,23 +28,16 @@ namespace ECommerceWeb.Areas.Customer.Controllers
         public IActionResult Index(PaginatedRequest request)
         {
 
-            PaginatedResult<Product> products = _unitOfWork.Product.GetPaginated(request.PageNumber, PaginatedRequest.ITEMS_PER_PAGE);
+            PaginatedResult<Product> result = _unitOfWork.Product.GetPaginated(
+                request.PageNumber,
+                PaginatedRequest.ITEMS_PER_PAGE,
+                product => 
+                    product.Name.Contains(request.SearchKeyword ?? string.Empty) || 
+                    product.Category.Any(c => c.Category.Name.ToLower().Contains(request.SearchKeyword ?? string.Empty)));
+            
+            result.SearchKeyword = request.SearchKeyword;
 
-            return View(products);
-
-            //if(query != null)
-            //{
-            //    ViewBag.Query = query;
-            //    IEnumerable<Product> products = _unitOfWork.Product.Search(query);
-            //    return View(products);
-            //}
-            //else
-            //{
-            //    //IEnumerable<Product> products = _unitOfWork.Product.GetAll("Category");
-            //    IEnumerable<Product> products = _unitOfWork.Product.GetAll();
-
-            //    return View(products);
-            //}
+            return View(result);
         }
 
         public IActionResult Details(int prodId)

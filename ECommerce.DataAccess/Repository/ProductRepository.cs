@@ -3,6 +3,7 @@ using ECommerce.DataAccess.Repository.IRepository;
 using ECommerce.Models;
 using ECommerceWeb.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace ECommerce.DataAccess.Repository
 {
@@ -20,16 +21,10 @@ namespace ECommerce.DataAccess.Repository
             _db.Products.Update(product);
         }
 
-        public IEnumerable<Product> Search(String query)
+        public PaginatedResult<Product> GetPaginated(int page, int pageSize, Expression<Func<Product, bool>> condition)
         {
-            return _db.Products.Where(p => p.Name.ToLower().Contains(query.ToLower()) ||
-                    p.Category.Any(c => c.Category.Name.ToLower().Contains(query.ToLower())));
-        }
-
-        public PaginatedResult<Product> GetPaginated(int page, int pageSize)
-        {
-            var count = _db.Products.Count();
-            var records = _db.Products
+            var count = _db.Products.Where(condition).Count();
+            var records = _db.Products.Where(condition)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
