@@ -39,5 +39,20 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             return View(cartVM);
         }
 
+        public IActionResult Remove(int cartId) 
+        {
+            var cartFromDb = _unitOfWork.Cart.Get(u => u.Id == cartId);
+
+            if (cartFromDb != null)
+            {
+                _unitOfWork.Cart.Remove(cartFromDb);
+                _unitOfWork.Save();
+                return RedirectToAction("Index");
+            }
+
+            return NotFound();
+        
+        }
+
     }
 }
