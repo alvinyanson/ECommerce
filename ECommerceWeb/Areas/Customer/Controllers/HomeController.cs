@@ -42,10 +42,9 @@ namespace ECommerceWeb.Areas.Customer.Controllers
 
         public IActionResult Details(int prodId)
         {
-            //Product product = _unitOfWork.Product.Get(u => u.Id == id, "Category");
             Cart cart = new()
             {
-                Product = _unitOfWork.Product.Get(u => u.Id == prodId, "Category"),
+                Product = _unitOfWork.Product.Get(u => u.Id == prodId, nameof(Category)),
                 Quantity = 1,
                 ProductId = prodId
             };
@@ -88,6 +87,7 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             }
             else
             {
+                // shopping cart does not exist
                 _unitOfWork.Cart.Add(cart);
             }
 
