@@ -24,21 +24,26 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index(string? query)
+        public IActionResult Index(PaginatedRequest request)
         {
-            if(query != null)
-            {
-                ViewBag.Query = query;
-                IEnumerable<Product> products = _unitOfWork.Product.Search(query);
-                return View(products);
-            }
-            else
-            {
-                //IEnumerable<Product> products = _unitOfWork.Product.GetAll("Category");
-                IEnumerable<Product> products = _unitOfWork.Product.GetAll();
 
-                return View(products);
-            }
+            PaginatedResult<Product> products = _unitOfWork.Product.GetPaginated(request.PageNumber, PaginatedRequest.ITEMS_PER_PAGE);
+
+            return View(products);
+
+            //if(query != null)
+            //{
+            //    ViewBag.Query = query;
+            //    IEnumerable<Product> products = _unitOfWork.Product.Search(query);
+            //    return View(products);
+            //}
+            //else
+            //{
+            //    //IEnumerable<Product> products = _unitOfWork.Product.GetAll("Category");
+            //    IEnumerable<Product> products = _unitOfWork.Product.GetAll();
+
+            //    return View(products);
+            //}
         }
 
         public IActionResult Details(int prodId)

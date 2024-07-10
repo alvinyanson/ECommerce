@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Product>
+﻿@using ECommerceWeb.Models
 
+@model PaginatedResult<Product>
 
 <div class="text-center mb-5">
     <h1 class="display-4">Welcome</h1>
@@ -16,7 +17,9 @@
 
 
 <div class="row">
-    @foreach (var product in Model.OrderByDescending(product => product.Id))
+    @foreach (var product in Model.Result)
+        @* @foreach (var product in Model.OrderByDescending(product => product.Id)) *@
+
     {
         <div class="col-12 col-lg-3 mb-4">
             <div class="card">
@@ -35,5 +38,32 @@
             </div>
         </div>
     }
-    
+</div>
+
+<div class="row">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Model.Page == 1 ? "disabled" : "")">
+            <a class="page-link" asp-route-p="@(Model.Page - 1)">Previous</a>
+        </li>
+
+        @for(var pageNumber = 1; pageNumber <= Model.TotalCount; pageNumber++)
+        {
+            if(pageNumber == Model.Page)
+            {
+                <li class="page-item active">
+                    <span class="page-link">@pageNumber</span>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-route-p="@pageNumber">@pageNumber</a>
+                </li>
+            }
+        }
+
+        <li class="page-item @(Model.Page == Model.TotalCount ? "disabled" : "")">
+            <a class="page-link" asp-route-p="@(Model.Page + 1)">Next</a>
+        </li>
+    </ul>
 </div>

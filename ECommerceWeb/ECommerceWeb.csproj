@@ -8,13 +8,9 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Account\**" />
-    <Compile Remove="NewFolder\**" />
     <Content Remove="Areas\Account\**" />
-    <Content Remove="NewFolder\**" />
     <EmbeddedResource Remove="Areas\Account\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="Areas\Account\**" />
-    <None Remove="NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
