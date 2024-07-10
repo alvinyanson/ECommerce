@@ -39,6 +39,16 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             return View(cartVM);
         }
 
+        public IActionResult Plus(int cartId)
+        {
+            var cartFromDb = _unitOfWork.Cart.Get(u => u.Id == cartId);
+            cartFromDb.Quantity += 1;
+            _unitOfWork.Cart.Update(cartFromDb);
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult Remove(int cartId) 
         {
             var cartFromDb = _unitOfWork.Cart.Get(u => u.Id == cartId);
@@ -47,7 +57,7 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             {
                 _unitOfWork.Cart.Remove(cartFromDb);
                 _unitOfWork.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             return NotFound();
