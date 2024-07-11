@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using ECommerce.Models;
+using ECommerce.Models.ViewModel;
 using ECommerce.Service.Services.Interfaces;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
-using NuGet.Protocol.Plugins;
 
 namespace ECommerceWeb.Areas.Account.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
 
@@ -35,20 +35,27 @@ namespace ECommerceWeb.Areas.Account.Controllers
                 return LocalRedirect(Url.Content("~/"));
             }
 
-            return View();
+            LoginVM loginVM = new LoginVM()
+            {
+                ReturnUrl = returnUrl,
+            };
+
+            return View(loginVM);
         }
 
         [HttpPost]
-        public async Task<IActionResult> LogIn(LogIn credentials)
+        public async Task<IActionResult> LogIn(LoginVM loginVM)
         {
-            var result = await _accountService.SignInAsync(credentials);
+            var result = await _accountService.SignInAsync(loginVM.Credential);
 
             if (!result.Succeeded)
             {
                 ModelState.AddModelError(string.Empty, "Invalid username or password.");
             }
 
-            return result.Succeeded ? LocalRedirect(Url.Content("~/")) : View();
+            loginVM.ReturnUrl ??= Url.Content("~/");
+
+            return result.Succeeded ? LocalRedirect(loginVM.ReturnUrl) : View();
         }
 
 

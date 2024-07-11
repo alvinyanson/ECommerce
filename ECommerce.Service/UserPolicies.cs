@@ -8,7 +8,7 @@ namespace ECommerce.Service
         [Roles([Role.Admin])]
         AdminRights,
 
-        [Roles([Role.Buyer,Role.Admin])]
+        [Roles([Role.Customer,Role.Admin])]
         BuyerRights,
     }
 }

@@ -3,7 +3,7 @@ namespace ECommerce.Service
 {
     public enum Role
     {
-        Buyer,
+        Customer,
         Admin
     }
 }

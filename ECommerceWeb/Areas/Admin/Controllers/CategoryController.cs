@@ -23,6 +23,7 @@ namespace ECommerceWeb.Areas.Admin.Controllers
             return View(categories);
         }
 
+        [HttpGet]
         public IActionResult Upsert(int? id)
         {
             if(id == null || id == 0)
@@ -60,7 +61,7 @@ namespace ECommerceWeb.Areas.Admin.Controllers
 
 
         [HttpDelete]
-        public IActionResult Delete(int? id) 
+        public IActionResult Delete(int id) 
         { 
             var categoryToDelete = _unitOfWork.Category.Get(u => u.Id == id);
 

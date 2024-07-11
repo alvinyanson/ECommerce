@@ -4,8 +4,6 @@ using ECommerceWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ECommerceWeb.Areas.Customer.Controllers
 {
@@ -14,7 +12,6 @@ namespace ECommerceWeb.Areas.Customer.Controllers
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<IdentityUser> _userManager;
-        public String userQuery;
 
         public HomeController(
             IUnitOfWork unitOfWork,
@@ -27,13 +24,16 @@ namespace ECommerceWeb.Areas.Customer.Controllers
 
         public IActionResult Index(PaginatedRequest request)
         {
-
             PaginatedResult<Product> result = _unitOfWork.Product.GetPaginated(
                 request.PageNumber,
                 PaginatedRequest.ITEMS_PER_PAGE,
                 product => 
                     product.Name.Contains(request.SearchKeyword ?? string.Empty) || 
-                    product.Category.Any(c => c.Category.Name.ToLower().Contains(request.SearchKeyword ?? string.Empty)));
+                    (   
+                        product.Category != null && 
+                        product.Category.Any(c => c.Category.Name.ToLower().Contains(request.SearchKeyword ?? string.Empty))
+                    )
+                );
             
             result.SearchKeyword = request.SearchKeyword;
 
@@ -52,46 +52,31 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             return View(cart);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        [HttpGet]
-        public IActionResult Search(String? query)
-        {
-            return RedirectToAction("Index", new { query });
-        }
-
-
         [HttpPost]
         [Authorize]
         public IActionResult Details(Cart cart)
         {
             string? userId = _userManager.GetUserId(User);
-            cart.OwnerId = userId;
 
-            Cart cartFromDb = _unitOfWork.Cart.Get(u => u.OwnerId == userId && u.ProductId == cart.ProductId);
-
-            if(cartFromDb != null)
+            if(!string.IsNullOrEmpty(userId))
             {
-                // shopping cart exist
-                cartFromDb.Quantity += cart.Quantity;
-                _unitOfWork.Cart.Update(cartFromDb);
-            }
-            else
-            {
-                // shopping cart does not exist
-                _unitOfWork.Cart.Add(cart);
-            }
+                cart.OwnerId = userId;
 
-            _unitOfWork.Save();
+                Cart cartFromDb = _unitOfWork.Cart.Get(u => u.OwnerId == userId && u.ProductId == cart.ProductId);
+
+                if (cartFromDb != null)
+                {
+                    cartFromDb.Quantity += cart.Quantity;
+                    _unitOfWork.Cart.Update(cartFromDb);
+                }
+                else
+                {
+                    _unitOfWork.Cart.Add(cart);
+                }
+
+                _unitOfWork.Save();
+                TempData["success"] = "Item added to cart.";
+            }
 
             return RedirectToAction(nameof(Index));
         }

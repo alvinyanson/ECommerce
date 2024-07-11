@@ -5,11 +5,8 @@ using ECommerce.Models.ViewModel;
 using ECommerce.Service;
 using ECommerce.Service.DTO;
 using ECommerce.Service.Services;
-using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace ECommerceWeb.Areas.Admin.Controllers
 {
@@ -17,7 +14,6 @@ namespace ECommerceWeb.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private static CategoryStateManager _categoryStateManager;
-
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IMapper _mapper;
@@ -32,13 +28,14 @@ namespace ECommerceWeb.Areas.Admin.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
-            IEnumerable<Product> products = _unitOfWork.Product.GetAll("Category");
-
+            IEnumerable<Product> products = _unitOfWork.Product.GetAll(nameof(Category));
             return View(products);
         }
 
+        [HttpGet]
         public IActionResult Upsert(int? id)
         {
             ProductVM productVM = new ProductVM()
@@ -53,8 +50,7 @@ namespace ECommerceWeb.Areas.Admin.Controllers
             }
             else
             {
-                productVM.Product = _unitOfWork.Product.Get(u => u.Id == id, "Category");
-
+                productVM.Product = _unitOfWork.Product.Get(u => u.Id == id, nameof(Category));
                 return View(productVM);
             }
         }
@@ -166,7 +162,7 @@ namespace ECommerceWeb.Areas.Admin.Controllers
             _unitOfWork.Product.Remove(productToDelete);
             _unitOfWork.Save();
 
-            String successMessage = "Product deleted successfully";
+            string successMessage = "Product deleted successfully";
             TempData["success"] = successMessage;
 
             return Json(new { success = true, message = successMessage });
@@ -182,13 +178,11 @@ namespace ECommerceWeb.Areas.Admin.Controllers
             builder = builder
                 .SetItems(_mapper.Map<IEnumerable<CategoryReadDto>>(categories));
 
-            // obtain the categories of the product with the specified id
             if (id > 0)
             {
                 IEnumerable<ProductCategory> productCategories = _unitOfWork.ProductCategory.GetAll().Where(u => u.ProductId == id);
 
                 builder = builder.SetSelectedItems(productCategories.Select(c => c.CategoryId));
-
             }
             _categoryStateManager = builder.Build();
 

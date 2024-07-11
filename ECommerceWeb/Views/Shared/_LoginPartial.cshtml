@@ -2,25 +2,31 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
+@{
+    string currentArea = ViewContext.RouteData.Values["area"]?.ToString();
+    string currentController = ViewContext.RouteData.Values["controller"].ToString();
+    string currentAction = ViewContext.RouteData.Values["action"].ToString();
+}
+
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a id="manage" class="nav-link " href="/" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+            <span class="nav-link">@UserManager.GetUserName(User)</span>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Logout">
-                <i class="bi bi-box-arrow-right"></i> Logout
+                Logout
             </a>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link " id="register" asp-area="Identity" asp-controller="Account" asp-action="SignUp">Register</a>
+            <a class="nav-link @(currentArea == "Identity" && currentController == "Account" && currentAction == "SignUp" ? "active" : "")" id="register" asp-area="Identity" asp-controller="Account" asp-action="SignUp">Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link " id="login" asp-area="Identity" asp-controller="Account" asp-action="LogIn">Login</a>
+            <a class="nav-link @(currentArea == "Identity" && currentController == "Account" && currentAction == "LogIn" ? "active" : "")" id="login" asp-area="Identity" asp-controller="Account" asp-action="LogIn">Login</a>
         </li>
     }
 </ul>

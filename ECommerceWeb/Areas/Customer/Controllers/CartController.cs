@@ -24,7 +24,7 @@ namespace ECommerceWeb.Areas.Customer.Controllers
         {
             string? userId = _userManager.GetUserId(User);
 
-            IEnumerable<Cart> result = _unitOfWork.Cart.GetAll("Product").Where(u => u.OwnerId == userId);
+            IEnumerable<Cart> result = _unitOfWork.Cart.GetAll(nameof(Product)).Where(u => u.OwnerId == userId);
 
             CartVM cartVM = new CartVM()
             {
@@ -43,6 +43,7 @@ namespace ECommerceWeb.Areas.Customer.Controllers
         {
             var cartFromDb = _unitOfWork.Cart.Get(u => u.Id == cartId);
             cartFromDb.Quantity += 1;
+
             _unitOfWork.Cart.Update(cartFromDb);
             _unitOfWork.Save();
 
@@ -78,7 +79,6 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             }
 
             return NotFound();
-        
         }
 
     }
