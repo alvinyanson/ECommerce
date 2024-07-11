@@ -81,5 +81,19 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             return NotFound();
         }
 
+        public IActionResult Checkout()
+        {
+            string? userId = _userManager.GetUserId(User);
+
+            var cartFromDb = _unitOfWork.Cart.GetAll().Where(u => u.OwnerId == userId);
+
+            _unitOfWork.Cart.RemoveRange(cartFromDb);
+            _unitOfWork.Save();
+
+            TempData["success"] = "Checkout success";
+
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
