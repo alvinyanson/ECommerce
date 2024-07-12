@@ -24,6 +24,18 @@ This application is a simplified E-commerce website that allows users to browse,
 - **Manage Cart Items:** Users can view and manage items in their cart, update quantities, or remove items.
 - **Total Cost Display:** The total cost of items in the shopping cart is displayed to the user.
 
+### Challenges Encountered Along the Implementation
+
+### 1. Scaffolding Identity
+While scaffolding the Identity provider, I encountered version issues that required downgrading from 8.0.6 to 8.0.4 in order to build the project.
+
+### 2. Passing the State from View (Custom User Input) to Controller
+To pass the state from view to controller for custom user input, I used an AJAX request and returned the partial view with the updated model to preserve the view.
+For example, when adding a product, it could belong to multiple categories. I created a custom user input which behaves as a multi-select.
+
+### 3. Deploying to Azure and Migrating Database to Azure
+While deploying to Azure and migrating the database, I faced a 500 error when accessing the site. I enabled App Service Logs and discovered the error 'System.Data.SqlClient.SqlException: Invalid object name 'dbo.Projects''. After extensive investigation, I realized the issue was a missing table. I attempted to migrate my local database using Microsoft Data Migration Assistant and Azure Data Studio, but both failed due to version issues. Finally, I ran 'update database' in Package Manager Console, ensuring the ConnectionString pointed to Azure SQL Database, and this resolved the problem.
+
 ## Getting Started
 
 ### Prerequisites
