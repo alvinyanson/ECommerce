@@ -65,7 +65,7 @@ While deploying to Azure and migrating the database, I faced a 500 error when ac
 3. **Run the application:**
 
 ### Usage
-- Access the application at `http://localhost:7208`
+- Access the application at `http://localhost:7208` (visual studio will open your app automatically)
 - Register a new user account or log in with existing credentials.
 - Browse through product categories, search for products, and add them to your shopping cart.
 - Manage your cart and proceed to checkout.
@@ -75,3 +75,6 @@ While deploying to Azure and migrating the database, I faced a 500 error when ac
 - **Entity Framework Core**
 - **SQL Server**
 - **Identity Provider for Authentication**
+
+- ## UML Class Diagram
+- [Class Diagram](https://lucid.app/lucidchart/8f1367ee-01e7-4ddb-b45b-a88eb09cf1f8/view)
