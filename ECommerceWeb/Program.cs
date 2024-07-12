@@ -46,6 +46,12 @@ builder.Services.AddAuthorization(options =>
     }
 });
 
+builder.Services.AddSession(options => {
+    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.AddTransient<UserValidator<IdentityUser>>();
 builder.Services.AddTransient<IAccountService, AccountService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -72,6 +78,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

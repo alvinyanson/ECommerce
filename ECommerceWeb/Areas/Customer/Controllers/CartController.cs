@@ -1,8 +1,10 @@
 ﻿using ECommerce.DataAccess.Repository.IRepository;
 using ECommerce.Models;
 using ECommerce.Models.ViewModel;
+using ECommerce.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ECommerceWeb.Areas.Customer.Controllers
 {
@@ -56,6 +58,8 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             if(cartFromDb.Quantity <= 1)
             {
                 _unitOfWork.Cart.Remove(cartFromDb);
+                var result = _unitOfWork.Cart.GetAll().Where(c => c.OwnerId == cartFromDb.OwnerId).Count();
+                HttpContext.Session.SetInt32(SD.SessionCart, result - 1);
             }
             else
             {
@@ -74,6 +78,9 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             if (cartFromDb != null)
             {
                 _unitOfWork.Cart.Remove(cartFromDb);
+                var result = _unitOfWork.Cart.GetAll().Where(c => c.OwnerId == cartFromDb.OwnerId).Count();
+                HttpContext.Session.SetInt32(SD.SessionCart, result - 1);
+
                 _unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
             }
@@ -88,6 +95,7 @@ namespace ECommerceWeb.Areas.Customer.Controllers
             var cartFromDb = _unitOfWork.Cart.GetAll().Where(u => u.OwnerId == userId);
 
             _unitOfWork.Cart.RemoveRange(cartFromDb);
+            HttpContext.Session.Clear();
             _unitOfWork.Save();
 
             TempData["success"] = "Checkout success";

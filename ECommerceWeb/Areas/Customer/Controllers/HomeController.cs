@@ -1,5 +1,6 @@
 using ECommerce.DataAccess.Repository.IRepository;
 using ECommerce.Models;
+using ECommerce.Service;
 using ECommerceWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -75,6 +76,8 @@ namespace ECommerceWeb.Areas.Customer.Controllers
                 }
 
                 _unitOfWork.Save();
+                var result = _unitOfWork.Cart.GetAll().Where(c => c.OwnerId == userId).Count();
+                HttpContext.Session.SetInt32(SD.SessionCart, result);
                 TempData["success"] = "Item added to cart.";
             }
 
