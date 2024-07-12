@@ -75,6 +75,3 @@ While deploying to Azure and migrating the database, I faced a 500 error when ac
 - **Entity Framework Core**
 - **SQL Server**
 - **Identity Provider for Authentication**
-
-- ## UML Class Diagram
-- [Class Diagram](https://lucid.app/lucidchart/8f1367ee-01e7-4ddb-b45b-a88eb09cf1f8/view)
