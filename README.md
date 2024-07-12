@@ -40,18 +40,20 @@ This application is a simplified E-commerce website that allows users to browse,
 
 2. **Setup the database:**
     - Update the `appsettings.json` with your SQL Server connection string.
-    - Run the following commands to apply migrations:
+    - Look for the "DefaultConnection" property and update it to match your server name.   It should look like the same below after you configure it:
       ```bash
-      dotnet ef database update
+      "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=ECommerceWeb;Trusted_Connection=True;TrustServerCertificate=True"
+      ```
+    
+    - Open Package Manage Console and run the following commands to apply migrations. (Make sure the selected project is ECommerce.DataAccess project)
+      ```bash
+      update database
       ```
 
 3. **Run the application:**
-    ```bash
-    dotnet run
-    ```
 
 ### Usage
-- Access the application at `http://localhost:5000`
+- Access the application at `http://localhost:7208`
 - Register a new user account or log in with existing credentials.
 - Browse through product categories, search for products, and add them to your shopping cart.
 - Manage your cart and proceed to checkout.
