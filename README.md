@@ -1,7 +1,7 @@
 # E-commerce Website
 
 ## Overview
-
+![E-commerce Website Logo](https://raw.githubusercontent.com/alvinyanson/ECommerce/master/localhost_7208__p%3D1.png)
 This application is a simplified E-commerce website that allows users to browse, search for, and purchase products. It features user registration and authentication, category management, product listings and details, and a shopping cart.
 
 ## Features
