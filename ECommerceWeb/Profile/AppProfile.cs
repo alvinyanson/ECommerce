@@ -11,9 +11,6 @@ namespace BrowseBay.Profiles
             // Login
             CreateMap<SignUp, LogIn>();
 
-            // Products
-            CreateMap<Product, ProductReadDto>();
-
             // Categories
             CreateMap<Category, CategoryReadDto>();
 

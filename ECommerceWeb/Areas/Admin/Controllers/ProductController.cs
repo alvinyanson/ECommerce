@@ -91,11 +91,11 @@ namespace ECommerceWeb.Areas.Admin.Controllers
 
                 if (product.Id == 0)
                 {
-                    // save product to database
+                    // save product to db
                     _unitOfWork.Product.Add(product);
                     _unitOfWork.Save();
 
-                    // save product categories to database
+                    // save selected categories to db
                     if (_categoryStateManager.Any())
                     {
                         IEnumerable<ProductCategoryDto> newCategoryDtos = _categoryStateManager.ToProductCategoryDtos(product.Id);
@@ -109,7 +109,6 @@ namespace ECommerceWeb.Areas.Admin.Controllers
                     _categoryStateManager.Clear();
                     _unitOfWork.Save();
 
-
                     TempData["success"] = "Product created successfully.";
                 }
                 else
@@ -120,7 +119,7 @@ namespace ECommerceWeb.Areas.Admin.Controllers
 
                     IEnumerable<ProductCategory> toDelete = _unitOfWork.ProductCategory.GetAll().Where(u => u.ProductId == product.Id);
 
-                    // delete the old categories of the product
+                    // delete old categories of product
                     foreach (var delete in toDelete)
                     {
                         _unitOfWork.ProductCategory.Remove(delete);
@@ -129,7 +128,7 @@ namespace ECommerceWeb.Areas.Admin.Controllers
 
                     IEnumerable<ProductCategoryDto> toAdd = _categoryStateManager.ToProductCategoryDtos(product.Id);
 
-                    // replace with the new categories
+                    // replace with the new selected categories
                     foreach (var add in toAdd)
                     {
                         _unitOfWork.ProductCategory.Add(_mapper.Map<ProductCategory>(add));
@@ -137,11 +136,10 @@ namespace ECommerceWeb.Areas.Admin.Controllers
 
                     _unitOfWork.Save();
 
-
                     TempData["success"] = "Product updated successfully.";
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             else
             {

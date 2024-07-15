@@ -81,7 +81,7 @@ namespace ECommerceWeb.Areas.Account.Controllers
         {
             await _accountService.SignOutAsync();
 
-            return RedirectToAction("LogIn");
+            return RedirectToAction(nameof(LogIn));
         }
 
     }
