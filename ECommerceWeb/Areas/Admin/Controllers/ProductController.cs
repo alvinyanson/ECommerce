@@ -166,7 +166,7 @@ namespace ECommerceWeb.Areas.Admin.Controllers
             return Json(new { success = true, message = successMessage });
         }
 
-        [HttpGet, HttpPost]
+        [HttpGet]
         public IActionResult GetCategories(int id)
         {
             IEnumerable<Category> categories = _unitOfWork.Category.GetAll();
@@ -187,7 +187,7 @@ namespace ECommerceWeb.Areas.Admin.Controllers
             return PartialView("CategoryTogglePartialView", _categoryStateManager);
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult ToggleCategory(int id)
         {
             _categoryStateManager.Toggle(id);
