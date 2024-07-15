@@ -4,11 +4,9 @@ namespace ECommerce.Service.Services;
 
 public class CategoryStateManager
 {
-    protected HashSet<int> _selectedCategories = new HashSet<int>();
+    protected HashSet<int> _selectedCategories = [];
 
     public IEnumerable<CategoryReadDto> CategoryReadDtos { get; protected set; } = default!;
-
-    public int[] SelectedCategoryIds => [.. _selectedCategories];
 
     protected CategoryStateManager() { }
 
@@ -32,22 +30,22 @@ public class CategoryStateManager
 
     public bool Any()
     {
-        return _selectedCategories.Any();
+        return _selectedCategories.Count != 0;
     }
 
     public void Clear()
     {
-        CategoryReadDtos = new List<CategoryReadDto>();
+        CategoryReadDtos = [];
         _selectedCategories.Clear();
     }
 
 
     public IEnumerable<ProductCategoryDto> ToProductCategoryDtos(int productId)
     {
-        return _selectedCategories.Select(c => new ProductCategoryDto
+        return _selectedCategories.Select(categoryId => new ProductCategoryDto
         {
             ProductId = productId,
-            CategoryId = c
+            CategoryId = categoryId
         });
     }
 }
